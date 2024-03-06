@@ -115,6 +115,7 @@ def game():
 
         elif 285 <= ball.ycor() or ball.ycor() <= -285:
             ball.bounce()
+            screen.bgcolor(change_bg_color(my_bg_colors))
 
         ball.move()
         screen.update()
