@@ -1,15 +1,23 @@
 from turtle import Screen, Turtle
-
-import score
 from Pong import Paddle
 from ball import Ball
 from score import Scoreboard
 import time
+import random
+
+# =============================== Background functions and stuff ============================
+my_bg_colors = ["#000", "#337357", "#FF3EA5", "#1D2B53", "#900C3F", "#FAA300", "#2e4242"]
+
+
+def change_bg_color(colors: list) -> str:
+    chosen_color = random.choice(colors)
+    return chosen_color
+
 
 # ================================================Screen ==========================================
 screen = Screen()
 screen.setup(width=800, height=600)
-screen.bgcolor("black")
+screen.bgcolor(change_bg_color(my_bg_colors))
 screen.title("Ping Pong by Ansh")
 
 screen.tracer(0)
@@ -70,47 +78,46 @@ screen.onkey(fun=ball.ball_reset, key="Return")
 screen.onkeypress(fun=screen.bye, key="0") # For debugging
 
 # ========================================= Main/Complex Things =======================================
-
+GAME_OVER_AFTER_POINTS = 5
 
 def game():
-    
-    screen.update()
+    while True:
+        screen.update()
 
-    if p1_score.scoreboard >= 1 or 1 <= p2_score.scoreboard:
-        p1_score.does_won(name="P1",
-                          win_or_not=(p1_score.scoreboard > p2_score.scoreboard),
-                          coordinates=p1_results_coord)
+        if p1_score.scoreboard >= GAME_OVER_AFTER_POINTS or GAME_OVER_AFTER_POINTS <= p2_score.scoreboard:
+            p1_score.does_won(name="P1",
+                            win_or_not=(p1_score.scoreboard > p2_score.scoreboard),
+                            coordinates=p1_results_coord)
 
-        p2_score.does_won(name="P2",
-                          win_or_not=(p2_score.scoreboard > p1_score.scoreboard),
-                          coordinates=p2_results_coord)
+            p2_score.does_won(name="P2",
+                            win_or_not=(p2_score.scoreboard > p1_score.scoreboard),
+                            coordinates=p2_results_coord)
 
-        p1_score.game_over(arg="Press Space to Play Again", coordinates=(-180, -230))
+            p1_score.game_over(arg="Press Space to Play Again", coordinates=(-180, -230))
 
-        return
+            return
 
-    if ball.xcor() >= 340 or ball.xcor() <= -340:
-        if ball.distance(left_paddle) <= 80 or ball.distance(right_paddle) <= 80:
-            ball.bounce_from_paddle()
-            ball.ball_speed += 0.05
-        else:
-            p1_score.update_score() if ball.xcor() >= 340 else p2_score.update_score()
-        
-            for _ in range(100):
-                ball.move()
+        if ball.xcor() >= 340 or ball.xcor() <= -340:
+            if ball.distance(left_paddle) <= 80 or ball.distance(right_paddle) <= 80:
+                ball.bounce_from_paddle()
+                ball.increase_speed()
+                screen.bgcolor(change_bg_color(my_bg_colors))
+            else:
+                p1_score.update_score() if ball.xcor() >= 340 else p2_score.update_score()
+            
+                for _ in range(100):
+                    ball.move()
+                    screen.update()
+
+                ball.ball_reset()
                 screen.update()
+                time.sleep(1)
 
-            ball.ball_reset()
-            screen.update()
-            time.sleep(1)
+        elif 285 <= ball.ycor() or ball.ycor() <= -285:
+            ball.bounce()
 
-    elif 285 <= ball.ycor() or ball.ycor() <= -285:
-        ball.bounce()
-
-    ball.move()
-    screen.update()
-    return game()
-
+        ball.move()
+        screen.update()
 
 game()
 

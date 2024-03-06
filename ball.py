@@ -10,7 +10,8 @@ class Ball(Turtle):
         self.color("white")
         self.penup()
         self.setheading(self.random_heading())
-        self.ball_speed = 5
+        self.default_ball_speed = 5
+        self.ball_speed = self.default_ball_speed
 
     def move(self):
         self.forward(self.ball_speed)
@@ -26,6 +27,7 @@ class Ball(Turtle):
         self.move()
 
     def ball_reset(self):
+        self.ball_speed = self.default_ball_speed
         self.goto(x=0, y=0)
         self.setheading(self.heading() + random.randint(120, 180))
 
@@ -33,4 +35,7 @@ class Ball(Turtle):
         random_num = random.randint(25, 80)
         left_or_right = 1
         return random_num if left_or_right else (random_num + 180)
+    
+    def increase_speed(self):
+        self.ball_speed += 0.5
     
