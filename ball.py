@@ -29,10 +29,12 @@ class Ball(Turtle):
     def ball_reset(self):
         self.ball_speed = self.default_ball_speed
         self.goto(x=0, y=0)
+
+        self.setheading(self.heading())
         self.setheading(self.heading() + random.randint(120, 180))
 
     def random_heading(self) -> int:
-        random_num = random.randint(25, 80)
+        random_num = random.randint(25, 60)
         left_or_right = 1
         return random_num if left_or_right else (random_num + 180)
     

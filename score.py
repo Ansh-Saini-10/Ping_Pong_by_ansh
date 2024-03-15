@@ -12,9 +12,12 @@ class Scoreboard:
         self.score.color("white")
         self.score.hideturtle()
         self.score.penup()
-        self.score.goto(coordinates)
+        self.coordinates = coordinates
 
-        self.write_score()
+        self.game_init()
+        # self.score.goto(self.coordinates)
+
+        # self.write_score()
 
     def write_score(self):
         self.score.clear()
@@ -33,3 +36,8 @@ class Scoreboard:
     def game_over(self, arg:str, coordinates: tuple):
         self.score.goto(coordinates)
         self.score.write(arg=arg, font=GAME_OVER_FONT)
+
+    def game_init(self):
+        self.scoreboard = 0
+        self.score.goto(self.coordinates)
+        self.write_score()
