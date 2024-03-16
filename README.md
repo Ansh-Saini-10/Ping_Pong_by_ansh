@@ -18,8 +18,7 @@ The Python Ping Pong Game is developed using Python's built-in turtle module, pr
 To run the Python Ping Pong Game on your local machine, follow these steps:
 
 1. Clone this repository to your local machine using `git clone https://github.com/Ansh-Saini-10/ping-pong.git`
-2. Navigate to the project directory: `cd ping-pong`
-3. Run the game using Python: `python main.py`
+2. Run the game using Python: `python main.py`
 
 ## Contributing
 
